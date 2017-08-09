@@ -11,9 +11,12 @@ module UseCases
 
     def create_pre_structure(lines)
       lines.reduce({}) do |r, line|
-        hash = convert_line_to_hash(line)
-        r[hash[:Campaign]] = [] if r[hash[:Campaign]].nil?
-        r[hash[:Campaign]].push(hash)
+        line = encode_utf8(line)
+        if valid?(line)
+          hash = convert_line_to_hash(line)
+          r[hash[:Campaign]] = [] if r[hash[:Campaign]].nil?
+          r[hash[:Campaign]].push(hash)
+        end
         r
       end
     end
@@ -33,6 +36,10 @@ module UseCases
 
       {Campaign: campaign, Validity: validity, Choice: choice, CONN: conn, 
        MSISDN: msisdn, GUID: guid, Shortcode: short_code.to_i}
+    end
+
+    def encode_utf8(line)
+      line.encode(Encoding.find('UTF-8'), {invalid: :replace, undef: :replace, replace: ''})
     end
   end
 end

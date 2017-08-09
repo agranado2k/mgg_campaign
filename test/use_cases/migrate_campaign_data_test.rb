@@ -16,6 +16,11 @@ module MigrateCampaignDataTest
       assert_equal hash, @migrate_campaign.convert_line_to_hash(line)
     end
 
+    def test_create_pre_structure_with_empty_data
+      lines = []
+      assert @migrate_campaign.create_pre_structure(lines).keys.empty?
+    end
+
     def test_create_pre_structure_with_data
       lines = [
         "VOTE 1168042591 Campaign:ssss_uk_01B Validity:during Choice:Jane CONN:MIG01TU MSISDN:00777779489999 GUID:190E96A8-89CA-41F8-9611-91F3490ACCA4 Shortcode:63334",
@@ -34,6 +39,11 @@ module MigrateCampaignDataTest
       }
 
       assert_equal pre_structure, @migrate_campaign.create_pre_structure(lines)
+    end
+
+    def test_create_pre_structure_with_complete_data
+      lines = File.read("./public/votes.txt").lines
+      assert_equal 4, @migrate_campaign.create_pre_structure(lines).keys.size
     end
   end
 
