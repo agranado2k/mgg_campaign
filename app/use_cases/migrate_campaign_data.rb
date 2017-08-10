@@ -22,7 +22,7 @@ module UseCases
     end
 
     def create_campaign_entity(name, votes)
-      campaign = Entities::Campaign.new(name)
+      campaign = Entities::Campaign.new(name: name)
       campaign.votes = votes.reduce([]){|r, vote_attr| r.push create_vote_entity(vote_attr)}
       campaign
     end
