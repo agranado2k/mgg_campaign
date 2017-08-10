@@ -3,6 +3,20 @@ require_relative "../../app/use_cases/migrate_campaign_data"
 
 
 module MigrateCampaignDataTest
+  class MigrationTest < Minitest::Test
+    def setup
+      @migrate_campaign = UseCases::MigrateCampaignData.new
+    end
+
+    def test_migrate_campaign_data_from_file
+      file_name = "./public/votes.txt"
+
+      campaigns = @migrate_campaign.migrate(file_name)
+
+      assert_equal 4, campaigns.size
+      assert_equal 263, campaigns.first.votes.size
+    end
+  end
 
   class CreaeEntitiesTest < Minitest::Test
     def setup
@@ -32,8 +46,7 @@ module MigrateCampaignDataTest
     end
 
     def test_create_campaign_entity
-      skip
-      name = @pre_strucuture.keys.first
+      name = @pre_structure.keys.first
       votes = @pre_structure.values.first
 
       campaign = @migrate_campaign.create_campaign_entity(name, votes)
@@ -43,7 +56,6 @@ module MigrateCampaignDataTest
     end
 
     def test_create_campaigns_entities
-      skip
       campaigns = @migrate_campaign.create_campaigns(@pre_structure)
 
       assert_equal 2, campaigns.size
@@ -85,12 +97,6 @@ module MigrateCampaignDataTest
       }
 
       assert_equal pre_structure, @migrate_campaign.create_pre_structure(lines)
-    end
-
-    def test_create_pre_structure_with_complete_data
-      lines = File.read("./public/votes.txt").lines
-      assert_equal 4, @migrate_campaign.create_pre_structure(lines).keys.size
-      assert_equal 263, @migrate_campaign.create_pre_structure(lines).values.first.size
     end
   end
 

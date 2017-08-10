@@ -1,4 +1,5 @@
 require_dependency "../entities/vote"
+require_dependency "../entities/campaign"
 
 module UseCases
   class MigrateCampaignData
@@ -10,6 +11,21 @@ module UseCases
     MSISDN_PATTERN = 'MSISDN\:(\d+)'
     GUID_PATTERN = 'GUID\:([\w\d\-]+)'
     SHORT_CODE_PATTERN = 'Shortcode\:(\d+)'
+
+    def migrate(file_name)
+      lines = File.read(file_name).lines
+      create_campaigns(create_pre_structure(lines))
+    end
+
+    def create_campaigns(structure)
+      structure.reduce([]){|r, (k,v)| r.push create_campaign_entity(k,v)}
+    end
+
+    def create_campaign_entity(name, votes)
+      campaign = Entities::Campaign.new(name)
+      campaign.votes = votes.reduce([]){|r, vote_attr| r.push create_vote_entity(vote_attr)}
+      campaign
+    end
 
     def create_vote_entity(attrs)
       Entities::Vote.new(attrs)
