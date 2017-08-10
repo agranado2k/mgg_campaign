@@ -1,3 +1,5 @@
+require_dependency "../entities/vote"
+
 module UseCases
   class MigrateCampaignData
     DATA_PATTERN = 'VOTE\s+\d+\s+Campaign\:[\d\w\_]+\s+Validity\:\w+\s+Choice\:\w+\s+CONN:[\w\d]+\s+MSISDN\:\d+\s+GUID\:[\w\d\-]+\s+Shortcode\:\d+'
@@ -8,6 +10,10 @@ module UseCases
     MSISDN_PATTERN = 'MSISDN\:(\d+)'
     GUID_PATTERN = 'GUID\:([\w\d\-]+)'
     SHORT_CODE_PATTERN = 'Shortcode\:(\d+)'
+
+    def create_vote_entity(attrs)
+      Entities::Vote.new(attrs)
+    end
 
     def create_pre_structure(lines)
       lines.reduce({}) do |r, line|

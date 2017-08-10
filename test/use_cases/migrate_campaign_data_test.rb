@@ -4,6 +4,52 @@ require_relative "../../app/use_cases/migrate_campaign_data"
 
 module MigrateCampaignDataTest
 
+  class CreaeEntitiesTest < Minitest::Test
+    def setup
+      @migrate_campaign = UseCases::MigrateCampaignData.new
+      @pre_structure = {
+        "ssss_uk_01B" => [
+          {Campaign: "ssss_uk_01B", Validity: "during", Choice: "Jane", CONN: "MIG01TU", MSISDN: "00777779489999", GUID: "190E96A8-89CA-41F8-9611-91F3490ACCA4", Shortcode: 63334},
+          {Campaign: "ssss_uk_01B", Validity: "during", Choice: "Tupele", CONN: "MIG01TU", MSISDN: "00777773559999", GUID: "A375C7FE-B748-480B-B8D4-5CE86A79762B", Shortcode: 63334}
+        ],
+        "Emmerdale" => [
+          {Campaign: "Emmerdale", Validity: "during", Choice: "GRAYSON", CONN: "MIG01OU", MSISDN: "00777771739999", GUID: "36E30841-0B9A-47FF-9A13-AA97A27A2E18", Shortcode: 63339}
+        ]
+      }
+    end
+
+    def test_create_vote_entity
+      vote_attr = @pre_structure.values.first.first
+
+      vote = @migrate_campaign.create_vote_entity(vote_attr)
+
+      assert_equal "during", vote.validity
+      assert_equal "Jane", vote.choice
+      assert_equal "MIG01TU", vote.conn
+      assert_equal "00777779489999", vote.msisdn
+      assert_equal "190E96A8-89CA-41F8-9611-91F3490ACCA4", vote.guid
+      assert_equal 63334, vote.short_code
+    end
+
+    def test_create_campaign_entity
+      skip
+      name = @pre_strucuture.keys.first
+      votes = @pre_structure.values.first
+
+      campaign = @migrate_campaign.create_campaign_entity(name, votes)
+
+      assert_equal "ssss_uk_01B", campaign.name
+      assert_equal 2, campaign.votes.size
+    end
+
+    def test_create_campaigns_entities
+      skip
+      campaigns = @migrate_campaign.create_campaigns(@pre_structure)
+
+      assert_equal 2, campaigns.size
+    end
+  end
+
   class ProcessDataTest < Minitest::Test
     def setup
       @migrate_campaign = UseCases::MigrateCampaignData.new
@@ -44,6 +90,7 @@ module MigrateCampaignDataTest
     def test_create_pre_structure_with_complete_data
       lines = File.read("./public/votes.txt").lines
       assert_equal 4, @migrate_campaign.create_pre_structure(lines).keys.size
+      assert_equal 263, @migrate_campaign.create_pre_structure(lines).values.first.size
     end
   end
 
