@@ -5,6 +5,8 @@ require_relative "../../app/use_cases/migrate_campaign_data"
 module MigrateCampaignDataTest
   class MigrationTest < Minitest::Test
     def setup
+      Repositories::Repository.register(:campaign, Repositories::CampaignInMemoryRepo.new)
+      Repositories::Repository.register(:vote, Repositories::VoteInMemoryRepo.new)
       @migrate_campaign = UseCases::MigrateCampaignData.new
     end
 

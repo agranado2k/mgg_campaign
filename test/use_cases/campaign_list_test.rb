@@ -1,33 +1,18 @@
 require_relative "../simple_test_helper"
+require_relative "../../app/use_cases/use_case_base"
 require_relative "../../app/use_cases/campaign_list"
 require_relative "../../app/entities/campaign"
 
-class CampaignInMemoryRepo
-  def initialize
-    @db = {}
-    @counter = 0
-  end
-
-  def new_entity(attrs)
-    object = Entities::Campaign.new(attrs)
-    @counter += 1
-    object.id ||= @counter
-    @db[object.id] = object
-    true
-  end
-
-  def all
-    @db.values
-  end
-end
 
 class CampaignListTest < Minitest::Test
   def setup
-    repo = CampaignInMemoryRepo.new
-    repo.new_entity(name: "ssss_uk_01B")
-    repo.new_entity(name: "Emmerdale")
-    repo.new_entity(name: "ssss_uk_zzactions")
-    @use_case_campaign_list = UseCases::CampaignList.new(repo)
+    Repositories::Repository.register(:campaign, Repositories::CampaignInMemoryRepo.new)
+    Repositories::Repository.register(:vote, Repositories::VoteInMemoryRepo.new)
+    Repositories::Repository.for(:campaign).new_entity(name: "ssss_uk_01B")
+    Repositories::Repository.for(:campaign).new_entity(name: "Emmerdale")
+    Repositories::Repository.for(:campaign).new_entity(name: "ssss_uk_zzactions")
+
+    @use_case_campaign_list = UseCases::CampaignList.new
   end
 
   def test_list_campaigns_names

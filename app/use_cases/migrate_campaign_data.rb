@@ -1,8 +1,9 @@
 require_dependency "../entities/vote"
 require_dependency "../entities/campaign"
+require_dependency "../repositories/repository"
 
 module UseCases
-  class MigrateCampaignData
+  class MigrateCampaignData < UseCaseBase
     DATA_PATTERN = 'VOTE\s+\d+\s+Campaign\:[\d\w\_]+\s+Validity\:\w+\s+Choice\:\w+\s+CONN:[\w\d]+\s+MSISDN\:\d+\s+GUID\:[\w\d\-]+\s+Shortcode\:\d+'
     CAMPAIGN_PATTERN = 'Campaign\:([\d\w\_]+)'
     VALIDITY_PATTERN = 'Validity\:(\w+)'
@@ -22,13 +23,13 @@ module UseCases
     end
 
     def create_campaign_entity(name, votes)
-      campaign = Entities::Campaign.new(name: name)
-      campaign.votes = votes.reduce([]){|r, vote_attr| r.push create_vote_entity(vote_attr)}
-      campaign
+      attrs = {name: name}
+      attrs[:votes] = votes.reduce([]){|r, vote_attr| r.push create_vote_entity(vote_attr)}
+      repo_register.for(:campaign).new_entity(attrs)
     end
 
     def create_vote_entity(attrs)
-      Entities::Vote.new(attrs)
+      repo_register.for(:vote).new_entity(attrs)
     end
 
     def create_pre_structure(lines)

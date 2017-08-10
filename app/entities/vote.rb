@@ -1,6 +1,6 @@
 module Entities
   class Vote
-    attr_reader :validity, :choice, :conn, :msisdn, :guid, :short_code
+    attr_accessor :id, :validity, :choice, :conn, :msisdn, :guid, :short_code
     def initialize(args)
       @validity = args[:Validity]
       @choice = args[:Choice]
