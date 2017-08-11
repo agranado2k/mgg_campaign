@@ -1,6 +1,7 @@
 module Entities
   class Vote
     attr_accessor :id, :validity, :choice, :conn, :msisdn, :guid, :short_code
+
     def initialize(args)
       @validity = args[:Validity]
       @choice = args[:Choice]

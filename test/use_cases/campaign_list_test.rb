@@ -1,8 +1,4 @@
 require_relative "../simple_test_helper"
-require_relative "../../app/use_cases/use_case_base"
-require_relative "../../app/use_cases/campaign_list"
-require_relative "../../app/entities/campaign"
-
 
 class CampaignListTest < Minitest::Test
   def setup
