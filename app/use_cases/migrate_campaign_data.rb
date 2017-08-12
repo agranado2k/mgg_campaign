@@ -1,5 +1,7 @@
+require_dependency "./use_case_base"
+
 module UseCases
-  class MigrateCampaignData < UseCaseBase
+  class MigrateCampaignData < UseCases::UseCaseBase
     DATA_PATTERN = 'VOTE\s+\d+\s+Campaign\:[\d\w\_]+\s+Validity\:\w+\s+Choice\:\w+\s+CONN:[\w\d]+\s+MSISDN\:\d+\s+GUID\:[\w\d\-]+\s+Shortcode\:\d+'
     CAMPAIGN_PATTERN = 'Campaign\:([\d\w\_]+)'
     VALIDITY_PATTERN = 'Validity\:(\w+)'
