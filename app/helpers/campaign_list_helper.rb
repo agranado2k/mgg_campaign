@@ -1,0 +1,2 @@
+module CampaignListHelper
+end

@@ -1,7 +1,6 @@
 require File.expand_path('../../config/environment', __FILE__)
 
-
-alias require_dependency require_relative
+require_relative "../app/repositories/repository"
 require_relative "./repositories/campaign_in_memory_repo"
 require_relative "./repositories/vote_in_memory_repo"
 require_relative "../app/entities/campaign"

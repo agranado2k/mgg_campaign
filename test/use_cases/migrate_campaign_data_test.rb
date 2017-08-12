@@ -1,6 +1,5 @@
 require_relative "../simple_test_helper"
 
-
 module MigrateCampaignDataTest
   class MigrationTest < Minitest::Test
     def setup
