@@ -74,8 +74,8 @@ chosen.
 ## Architecture and Design Decisions
 Rails uses MVC pattern that is great for Web Application. But if we only
 use this pattern we can have some coupled code that is hard to test and
-organize [SOLID
-Principles](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)).
+organize ([SOLID
+Principles](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))).
 
 So to improve the code organization I decided to use the hexagonal
 architecture that can help do decouple code from the Rails framework
@@ -83,7 +83,8 @@ architecture that can help do decouple code from the Rails framework
 
 For emphasize I created a folder **app** in **lib** where I included the
 application and domain files/code. I let the Rails files/code
-(controllers, models and views) in the standard **app** folder.
+(controllers, models and views) in the standard **app** folder. But I
+could created all files/code in starndard **app**.
 
 For Rail I have only two routes (**'/'** and **'/campaign/detail'**),
 one controller and two views. Everything else are in **'lib/app'** with
@@ -94,9 +95,12 @@ I organized the code:
 - UseCases, where are the business logic, how parse file information to
   create the entities (campaigns and votes), how get the campaigns names
 in a list, how to analyze the campaign votes for each candidate and
-return the structure with all this information. 
+return the structure with all this information. Also I have test for all
+the use cases on test folder;
 - Repositories, here are how I abstract the Storage using the Repository
-  Pattern that decouple my code from Active Record.
+  Pattern that decouple my code from Active Record. It allow me to use
+any kind of Storage only inject it. So I can use a InMemoryDB for test
+and MySQL (with ActiveRecord) on development and production.
 
 The good thing to organize the code in this way is that we can isolate
 the inner code from outer code, keeping the SOLID principles. 
