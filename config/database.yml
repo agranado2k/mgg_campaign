@@ -51,5 +51,4 @@ test:
 #
 production:
   <<: *default
-  database: mgage_campaigns_production
   url: <%= ENV['JAWSDB_URL'] %>
