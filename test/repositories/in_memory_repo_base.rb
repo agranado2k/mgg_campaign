@@ -16,5 +16,9 @@ module Repositories
     def all
       @db.values
     end
+
+    def wrap_model(domains)
+      @db.values
+    end
   end
 end

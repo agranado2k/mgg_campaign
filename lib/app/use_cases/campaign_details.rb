@@ -1,7 +1,5 @@
-require_dependency "./use_case_base"
-
 module UseCases
-  class CampaignDetails < UseCases::UseCaseBase
+  class CampaignDetails < UseCaseBase
     def detail(campaign)
       count_votes(campaign.votes)
     end

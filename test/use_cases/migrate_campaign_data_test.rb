@@ -1,4 +1,4 @@
-require_relative "../simple_test_helper"
+require "test_helper"
 
 module MigrateCampaignDataTest
   class MigrationTest < Minitest::Test

@@ -1,8 +1,9 @@
 module Entities
-  class Campaign
+  class Campaign < EntityBase
     attr_accessor :id, :name, :votes
 
     def initialize(args)
+      @id = args[:id]
       @name = args[:name]
       @votes = args[:votes] || []
     end

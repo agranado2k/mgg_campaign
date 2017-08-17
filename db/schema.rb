@@ -10,6 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170812223509) do
+
+  create_table "campaign_ars", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vote_ars", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "campaign_ar_id"
+    t.string "campaign"
+    t.string "validity"
+    t.string "choice"
+    t.string "conn"
+    t.string "msisdn"
+    t.string "guid"
+    t.integer "short_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_ar_id"], name: "index_vote_ars_on_campaign_ar_id"
+  end
 
 end

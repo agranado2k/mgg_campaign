@@ -1,4 +1,4 @@
-require_relative "../simple_test_helper"
+require "test_helper"
 
 class CampaignDetailsTest < Minitest::Test
   def setup

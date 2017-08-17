@@ -1,7 +1,7 @@
-require_dependency "./use_case_base"
+require_dependency "use_case_base" unless defined? UseCases::UseCaseBase
 
 module UseCases
-  class MigrateCampaignData < UseCases::UseCaseBase
+  class MigrateCampaignData < UseCaseBase
     DATA_PATTERN = 'VOTE\s+\d+\s+Campaign\:[\d\w\_]+\s+Validity\:\w+\s+Choice\:\w+\s+CONN:[\w\d]+\s+MSISDN\:\d+\s+GUID\:[\w\d\-]+\s+Shortcode\:\d+'
     CAMPAIGN_PATTERN = 'Campaign\:([\d\w\_]+)'
     VALIDITY_PATTERN = 'Validity\:(\w+)'
@@ -22,7 +22,7 @@ module UseCases
 
     def create_campaign_entity(name, votes)
       attrs = {name: name}
-      attrs[:votes] = votes.reduce([]){|r, vote_attr| r.push create_vote_entity(vote_attr)}
+      attrs[:votes] = votes.reduce([]){|r, vote_attr| r.push Entities::Vote.new(vote_attr)}
       repo_register.for(:campaign).new_entity(attrs)
     end
 
