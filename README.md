@@ -1,6 +1,10 @@
+[![Build
+Status](https://travis-ci.org/agranado2k/mgg_campaign.svg?branch=master)](https://travis-ci.org/agranado2k/mgg_campaign)
+
+# Mission
 temp0566
 
-Task:
+### Task:
 
 Create a rails application to show the results for TV SMS voting
 campaigns,
@@ -66,3 +70,80 @@ chosen.
 
 - The CONN, MSISDN, Shortcode and GUID fields are not relevant to this
  exercise.
+ 
+## Architecture and Design Decisions
+Rails uses MVC pattern that is great for Web Application. But if we only
+use this pattern we can have some coupled code that is hard to test and
+organize [SOLID
+Principles](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)).
+
+So to improve the code organization I decided to use the hexagonal
+architecture that can help do decouple code from the Rails framework
+(that is awesome!).
+
+For emphasize I created a folder **app** in **lib** where I included the
+application and domain files/code. I let the Rails files/code
+(controllers, models and views) in the standard **app** folder.
+
+For Rail I have only two routes (**'/'** and **'/campaign/detail'**),
+one controller and two views. Everything else are in **'lib/app'** with
+my application files/code. 
+
+I organized the code: 
+- Domains, the entities **campaign** and **vode** in entities folder;
+- UseCases, where are the business logic, how parse file information to
+  create the entities (campaigns and votes), how get the campaigns names
+in a list, how to analyze the campaign votes for each candidate and
+return the structure with all this information. 
+- Repositories, here are how I abstract the Storage using the Repository
+  Pattern that decouple my code from Active Record.
+
+The good thing to organize the code in this way is that we can isolate
+the inner code from outer code, keeping the SOLID principles. 
+It's easier to test, for example, we can use memory db for test propose
+(I use it), instead of use Active Record. Also we can run test without
+load Rails that is faster!!!
+
+![hexagonal
+architecture](https://raw.githubusercontent.com/smakagon/decoupling/master/public/possible.png)
+
+
+#### References:
+- [October CincyRb - Jim Weirich on Decoupling from
+  Rails](https://www.youtube.com/watch?v=tg5RFeSfBM4)
+- [Decoupling from Rails [Part 1] - Repository and
+  UseCase](http://rubyblog.pro/2017/03/decoupling-from-rails-repository-and-use-case)
+- [The Repository
+  Pattern](https://8thlight.com/blog/mike-ebert/2013/03/23/the-repository-pattern.html)
+- [Implementing the Repository Pattern in
+  Ruby](http://hawkins.io/2013/10/implementing_the_repository_pattern/)
+- [Thanks to
+  repositories...](http://blog.arkency.com/2015/06/thanks-to-repositories/)
+- [Why is your Rails application still coupled to
+  ActiveRecord?](https://blog.lelonek.me/why-is-your-rails-application-still-coupled-to-activerecord-efe34d657c91)
+
+
+## For Test
+Execute:
+```
+rake test
+```
+
+## For run the application
+Execute:
+```
+rails s
+```
+or
+
+Access the Heroku app in this
+[URL](https://mgagecampaign.herokuapp.com/)
+
+## For run the migration script
+Execute:
+```
+bundle exec rake 'db:migrate_campaigns_data[file_path]'
+```
+Where **file_path** is the file with data. For our exemple the file_path
+is **'public/votes.txt'**.
+
