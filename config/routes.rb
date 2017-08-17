@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'campaign_list/index'
+  get 'campaign/index', to: "campaign#index"
+  get 'campaign/detail', to: "campaign#detail"
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root to: "campaign#index"
 end

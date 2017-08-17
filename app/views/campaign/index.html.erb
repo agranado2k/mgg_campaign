@@ -1,0 +1,6 @@
+<h1>Campagin List</h1>
+<ul>
+  <% @names.each do |name| %>
+    <li><%= link_to name, controller: "campaign", action: "detail", id: name %></li>
+  <% end %>
+</ul>

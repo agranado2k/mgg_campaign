@@ -17,8 +17,8 @@ module Repositories
       @db.values
     end
 
-    def wrap_model(domains)
-      @db.values
+    def find_by(args)
+      all.select{|v| v.name == args[:name]}.first
     end
   end
 end

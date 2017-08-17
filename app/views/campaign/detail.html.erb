@@ -1,0 +1,24 @@
+<h1>Campaign Detail</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>valid votes</th>
+      <th>invalid votes</th>
+      <th>total votes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @details.each_with_index do |detail, index| %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td><%= detail[:choice] %></td>
+        <td><%= detail[:valid_votes] %></td>
+        <td><%= detail[:invalid_votes] %></td>
+        <td><%= detail[:valid_votes]+detail[:invalid_votes] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
