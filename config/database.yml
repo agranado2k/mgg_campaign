@@ -55,3 +55,4 @@ production:
   username: <%= ENV['JAWSDB_USERNAME'] %>
   password: <%= ENV['JAWSDB_PASSWORD'] %>
   url: <%= ENV['JAWSDB_HOST'] %>
+  socket: <%= ENV['JAWSDB_HOST'] %>
