@@ -9,7 +9,6 @@ module MigrateCampaignDataTest
     end
 
     def test_migrate_campaign_data_from_file
-      skip
       file_name = "./public/votes.txt"
 
       campaigns = @migrate_campaign.migrate(file_name)
