@@ -52,5 +52,6 @@ test:
 production:
   <<: *default
   database: mgage_campaigns_production
-  username: mgage_campaigns
-  password: <%= ENV['MGAGE_CAMPAIGNS_DATABASE_PASSWORD'] %>
+  username: <%= ENV['JAWSDB_USERNAME'] %>
+  password: <%= ENV['JAWSDB_PASSWORD'] %>
+  url: <%= ENV['JAWSDB_HOST'] %>
