@@ -115,6 +115,7 @@ architecture](https://raw.githubusercontent.com/smakagon/decoupling/master/publi
 #### References:
 - [October CincyRb - Jim Weirich on Decoupling from
   Rails](https://www.youtube.com/watch?v=tg5RFeSfBM4)
+- [Domain Driven Design and Hexagonal Architecture with Rails](https://www.youtube.com/watch?v=_rbF97T4480)
 - [Decoupling from Rails [Part 1] - Repository and
   UseCase](http://rubyblog.pro/2017/03/decoupling-from-rails-repository-and-use-case)
 - [The Repository
